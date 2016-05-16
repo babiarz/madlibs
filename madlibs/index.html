@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mad Lib</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/style.css">
+		<meta name="viewport" content="width=device-width">
+	</head>
+	<body>
+
+		<h1 id="xForY"></h1>
+
+		<div id="inputs">
+			<button id="create">Create New Startup</button>
+			<button id="save">View My Favorite Startups</button>
+		</div>
+
+		<section class="ideas">
+			<h2>
+				Start-up Ideas:
+			</h2>
+			<ul class="list">
+			</ul>
+		</section>
+
+		<section class="favs">
+			<h2>
+				My Favorites:
+			</h2>
+			<ul class="favorite-list">
+			</ul>
+		</section>	
+
+		<script src='http://code.jquery.com/jquery-latest.min.js'></script>
+		<script src="js/app.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+		<script id="madlibs" type="text/x-handlebars-template">
+				<li>
+					{{name}}
+					<input type="checkbox" />
+				</li>
+		</script>
+
+		<script>
+			// $('#create').click(function() {
+			// alert('A startup that is ' + startups[random1] + ', but for ' + groups[random2]);
+			// })	
+
+			// Get the contents of our template
+			var templateSource = $('#madlibs').html();
+			// Compile it with Handlebars, preparing it for use
+			var compiledTemplate = Handlebars.compile(templateSource);
+			// Declare our data
+			var data = {
+			    name : ('A startup that is ' + startups[random1] + ', but for ' + groups[random2])
+			};
+			// Generate the HTML from the template
+			var generatedHtml = compiledTemplate(data);
+
+			$('#create').click(function() {
+				$(generatedHtml).appendTo('ul.list')
+			})
+
+			// Adds or Removes from Favorites
+			$('ul').on('click', 'input[type=checkbox]', function(event) {
+				if($(this).is(":checked")) {
+					$(this).parent().appendTo('ul.favorite-list, ul.list')
+				} else {
+					$(this).parent().remove()
+				}
+			})
+
+			
+
+			// Only shows favorites list when checked
+			$("button#save").click(function(){
+    			$("section.favs").show();
+			});
+
+			// Displays list when checked
+			// $('#save').click(function() {
+			// 	$("li.favorite").appendTo('ul.favorite-list')
+			// })
+
+			// // Returns a NodeList
+			// var elems = document.getElementsByTagName( "li" );
+			// // Convert the NodeList to an Array
+			// var arr = jQuery.makeArray( elems );
+			// // Use an Array method on list of dom elements
+			// arr.reverse();
+			// $( arr ).appendTo( document.body );
+
+		</script>		
+	
+	</body>
+</html>
